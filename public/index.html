@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealthMate - Login</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="index.js"></script>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <h2>Log In</h2>
+      <form id="loginForm">
+        <div class="input-field">
+          <label for="username">Username </label>
+          <input type="text" id="username" required>
+        </div>
+        <div class="input-field">
+          <label for="password">Password</label>
+          <input type="password" id="password" required>
+        </div>
+        <div class="button-group">
+          <button type="button" class="button primary" onclick="signin()">Submit</button>
+          <button type="button" class="button secondary" onclick="openSignup()">New User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="dialog" class="dialog" style="display: none;"> <!-- Initially hidden -->
+    <div class="dialog-content">
+        <h3>Incorrect Username or Password</h3> <!-- Default message -->
+        <p>Please try again</p>
+        <button onclick="closeDialog()" class="button">Close</button>
+    </div>
+</div>
+
+  
+</body>
+</html>

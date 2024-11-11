@@ -1,0 +1,231 @@
+
+
+/* Exercise Tracker Section */
+.exercise-tracker {
+    text-align: center;
+    width: 80%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 0.5em;
+}
+
+.info {
+    font-size: 1em;
+    color: #666;
+    margin: 1em 0;
+}
+
+/* Progress Color Section */
+.progress-color {
+    background-color: #825eb9b5;
+    color: white;
+    font-weight: bold;
+    padding: 15px;
+    margin: 20px auto;
+    width: 60%;
+    text-align: center;
+    border-radius: 6px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Exercise Form */
+.exercise-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.exercise-form select,
+.exercise-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+}
+
+.exercise-form input[type="number"] {
+    -moz-appearance: textfield; /* For Firefox */
+}
+
+/* Table for Today's Exercises */
+.today-exercises {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+    color: #333;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+/* History Section */
+.history {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+}
+
+/* Home Button Styling */
+.home-button-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.home-button {
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.home-button:hover {
+    background-color: darkgreen;
+}
+
+/* Responsive Design */
+@media (min-width: 600px) {
+    .progress-color {
+        width: 50%;
+    }
+
+    .exercise-form select,
+    .exercise-form input {
+        width: 80%;
+    }
+}
+
+@media (min-width: 960px) {
+    .container {
+        width: 80%;
+    }
+
+    .progress-color {
+        width: 40%;
+    }
+}
+/* Sidebar Styling */
+#sidebar {
+    position: fixed;
+    left: -150px; /* Hide sidebar initially */
+    width: 150px;
+    height: 100%;
+    background-color: #333;
+    transition: left 0.3s ease;
+    z-index: 1;
+}
+
+#sidebar.sidebar-open {
+    left: 0; /* Slide sidebar into view */
+}
+
+/* Sidebar Menu Styling */
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 30px;
+}
+
+#sidebar ul li {
+    padding: 15px;
+    border-bottom: 1px solid #444;
+}
+
+#sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+/* Main Content Wrapper */
+#content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: margin-left 0.3s ease;
+    margin-left: 0; /* Default position when sidebar is hidden */
+}
+
+/* Adjust main content when sidebar is open */
+#content.sidebar-visible {
+    margin-left: 150px; /* Add left margin when sidebar is open */
+}
+
+/* Container for Exercise Tracker */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 5% auto;
+    width: 90%;
+    max-width: 1200px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+#navbar {
+    background-color: #4CAF50;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#navbar-content {
+    display: flex;
+    align-items: center;
+}
+
+#menu-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+.logout-button {
+    margin-left: auto;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}

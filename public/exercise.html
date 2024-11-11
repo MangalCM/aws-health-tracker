@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise Goal Tracker</title>
+  <link rel="stylesheet" href="exercise.css">
+</head>
+<body>
+  <div id="navbar">
+    <div id="navbar-content">
+        <button id="menu-btn">&#9776;</button>
+        <a href="index.html" class="logout-button">Logout</a>
+    </div>
+    <div class="navbar-links">
+      <a href="home.html">Home</a>
+    </div>
+  </div>
+
+  <aside id="sidebar">
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="water.html">Water</a></li>
+      <li><a href="sleep.html">Sleep</a></li>
+      <li><a href="medical.html">Health</a></li>
+      <li><a href="exercise.html">Exercise</a></li>
+      <li><a href="settings.html">Settings</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul>
+  </aside>
+
+  <div class="container">
+    <div class="exercise-tracker">
+      <h1 class="header">Exercise Tracker</h1>
+      <p class="info">Select a workout below and choose the duration of the activity. Your daily workouts will be recorded.</p>
+
+      <form class="exercise-form" id="exerciseForm">
+        <label for="workout">Workouts</label>
+        <select id="workout">
+          <option value="">Select Workout</option>
+          <option value="Walking">Walking</option>
+          <option value="Jogging">Jogging</option>
+          <option value="Running">Running</option>
+          <option value="Swimming">Swimming</option>
+          <option value="Cycling">Cycling</option>
+          <option value="Yoga">Yoga</option>
+          <option value="HIIT">HIIT</option>
+          <option value="Strength Training">Strength Training</option>
+          <option value="Stair Stepper">Stair Stepper</option>
+          <option value="Boxing">Boxing</option>
+          <option value="Other">Other</option>
+        </select>
+        <input type="number" id="minutes" placeholder="Enter Minutes" />
+        <button type="button" onclick="addExercise()">Submit</button> <!-- Submit button -->
+      </form>
+
+    </div>
+  </div>
+
+  <script src="exercise.js"></script> <!-- Your exercise logic -->
+</body>
+</html>

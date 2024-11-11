@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Goal</title>
+    <link rel="stylesheet" href="water.css">
+</head>
+<body>
+    <div class="header">
+        <a href="home.html" class="home-button">Home</a>
+    </div>
+    <div class="container">
+        <div class="water-goal-card">
+            <h1>Water Goal</h1>
+            <p>Drink at least 8 glasses of 8 fluid ounces each day.</p>
+            <div class="progress">Current Progress: <span id="current-progress">0</span></div>
+            
+            <div class="form">
+                <input type="number" id="addGlasses" placeholder="Enter Water">
+                <button onclick="submitWater()">Submit</button>
+            </div>
+        </div>
+        <div class="history">
+            <h2>History (Last 7 Days)</h2>
+            <div id="chart-container">
+                <div class="bar" style="height: 0%;">0</div>
+                <div class="bar" style="height: 0%;">0</div>
+                <div class="bar" style="height: 0%;">0</div>
+                <div class="bar" style="height: 0%;">0</div>
+                <div class="bar" style="height: 0%;">0</div>
+                <div class="bar" style="height: 0%;">0</div>
+                <div class="bar" style="height: 0%;">0</div>
+            </div>
+        </div>
+    </div>
+    <script src="water.js"></script>
+</body>
+</html>

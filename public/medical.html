@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="medical.css"> <!-- Link to your custom CSS -->
+    <title> Medical History</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-links">
+            <a href="home.html">Home</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-section">
+            <h2>Enter Your Medical History</h2>
+            <div class="calendar-section">
+                
+                <input type="date" id="historyDate" value="" required>
+                
+            </div>
+            <p></p>
+            <form id="medicalHistoryForm">
+                <div class="form-group">
+                    <label for="medicalCondition">Medical Condition</label>
+                    <input type="text" id="medicalCondition" required>
+                </div>
+                <div class="form-group">
+                    <label for="reason">Reason</label>
+                    <input type="text" id="reason" required>
+                </div>
+                <div class="form-group">
+                    <label for="medications">Current Medications</label>
+                    <input type="text" id="medications">
+                </div>
+                <div class="form-group">
+                    <label for="medicalReport">Upload Medical Report (Optional)</label>
+                    <input type="file" id="medicalReport">
+                </div>
+                <div class="form-group">
+                    <label for="uploadImage">Upload Image (Optional)</label>
+                    <input type="file" id="uploadImage">
+                </div>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+
+            
+        </div>
+
+        <div class="info-section">
+            <h3>Previous Records</h3>
+            <p>View or edit your previously uploaded medical history records.</p>
+            <button class="view-history-button" id="historyBtn">View History</button>
+        </div>
+    </div>
+
+    <script src="medical.js"></script> <!-- Link to your custom JS -->
+</body>
+</html>
