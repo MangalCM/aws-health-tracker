@@ -2,41 +2,25 @@ const express = require('express');
 const { MongoClient } = require('mongodb');
 const multer = require('multer');
 const AWS = require('aws-sdk');
-const multerS3 = require('multer-s3');
+const path = require('path');
 const router = express.Router();
 const uri = 'mongodb+srv://cmmangal523:SxQOHOrlVv5JAHYn@hts.q3tn9.mongodb.net/?retryWrites=true&w=majority&appName=HTS'; // MongoDB connection string
 const client = new MongoClient(uri);
 
-// Set up AWS S3
+// AWS S3 Configuration
 const s3 = new AWS.S3({
-    accessKeyId: 'AKIA4SZHNXMZCC6BQLWR', // Replace with your AWS Access Key
-    secretAccessKey: 'cc1gQkUcPWTTRh3TPQENCkwzw0mNJ3TL4qyiSIUf', // Replace with your AWS Secret Key
-    region: 'ap-south-1' // Asia Pacific (Mumbai) region
+    accessKeyId: 'AKIA4SZHNXMZCC6BQLWR',
+    secretAccessKey: 'cc1gQkUcPWTTRh3TPQENCkwzw0mNJ3TL4qyiSIUf',
+    region: 'ap-south-1b',
 });
 
-// Multer setup to upload files to S3
-const upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: 'my-aws-health-tracker', // Replace with your S3 bucket name
-        acl: 'public-read', // Make files publicly readable
-        metadata: function (req, file, cb) {
-            cb(null, { fieldName: file.fieldname });
-        },
-        key: function (req, file, cb) {
-            // Give unique name to each file uploaded
-            cb(null, `medical_reports/${Date.now().toString()}-${file.originalname}`);
-        }
-    })
-});
+// Set up Multer storage configuration for file uploads
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
-// POST route for adding medical history with file uploads
-router.post('/', upload.fields([{ name: 'medicalReport', maxCount: 1 }, { name: 'uploadImage', maxCount: 1 }]), async (req, res) => {
+// POST route for adding medical history (MongoDB)
+router.post('/', async (req, res) => {
     const { username, date, condition, reason, medications } = req.body;
-
-    // Get file URLs from the request
-    const medicalReportUrl = req.files['medicalReport'] ? req.files['medicalReport'][0].location : null;
-    const uploadImageUrl = req.files['uploadImage'] ? req.files['uploadImage'][0].location : null;
 
     try {
         await client.connect();
@@ -48,8 +32,6 @@ router.post('/', upload.fields([{ name: 'medicalReport', maxCount: 1 }, { name: 
             condition,
             reason,
             medications,
-            medicalReportUrl,
-            uploadImageUrl,
             createdAt: new Date()
         };
 
@@ -63,26 +45,46 @@ router.post('/', upload.fields([{ name: 'medicalReport', maxCount: 1 }, { name: 
     }
 });
 
-// GET route to fetch user's medical history
-router.get('/', async (req, res) => {
-    const { username } = req.query;
+// POST route for uploading files to S3
+router.post('/uploadFiles', upload.fields([{ name: 'medicalReport' }, { name: 'uploadImage' }]), async (req, res) => {
+    const { medicalReport, uploadImage } = req.files;
+    const fileUrls = [];
 
     try {
-        await client.connect();
-        const userDatabase = client.db(`user_${username}`);
-        const userHealthCollection = userDatabase.collection('user_health');
+        // Upload the medical report file
+        if (medicalReport) {
+            const reportKey = `medicalReports/${Date.now()}_${medicalReport[0].originalname}`;
+            const params = {
+                Bucket: 'my-aws-health-tracker',
+                Key: reportKey,
+                Body: medicalReport[0].buffer,
+                ContentType: medicalReport[0].mimetype,
+                ACL: 'public-read',
+            };
 
-        const records = await userHealthCollection.find({}).toArray();
+            const s3Response = await s3.upload(params).promise();
+            fileUrls.push({ medicalReport: s3Response.Location });
+        }
 
-        res.status(200).json({
-            success: true,
-            records: records || []
-        });
+        // Upload the image file
+        if (uploadImage) {
+            const imageKey = `images/${Date.now()}_${uploadImage[0].originalname}`;
+            const params = {
+                Bucket: 'my-aws-health-tracker',
+                Key: imageKey,
+                Body: uploadImage[0].buffer,
+                ContentType: uploadImage[0].mimetype,
+                ACL: 'public-read',
+            };
+
+            const s3Response = await s3.upload(params).promise();
+            fileUrls.push({ uploadImage: s3Response.Location });
+        }
+
+        res.status(200).json({ message: 'Files uploaded successfully', fileUrls });
     } catch (error) {
-        console.error('Error fetching medical history:', error);
-        res.status(500).json({ message: 'Failed to fetch medical history' });
-    } finally {
-        await client.close();
+        console.error('Error uploading files:', error);
+        res.status(500).json({ message: 'Failed to upload files' });
     }
 });
 

@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors'); // Import CORS
 
@@ -14,13 +13,19 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Enable CORS for all routes
-app.use(cors({
-    origin: 'http://52.66.236.209:3000', // Replace with your frontend's origin for production
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add other methods as needed
-    credentials: true // If you need to support cookies
-}));
+const corsOptions = {
+    origin: process.env.FRONTEND_ORIGIN , // Default to localhost in development
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+};
 
-app.use(bodyParser.json());
+app.use(cors(corsOptions));
+
+// Built-in express middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Use routes
@@ -36,6 +41,7 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: 'Internal Server Error' });
 });
 
-app.listen(PORT, '0.0.0.0', () => { // Bind to all IP addresses
+// Start server
+app.listen(PORT, () => {
     console.log(`Server is running on http://0.0.0.0:${PORT}`);
 });

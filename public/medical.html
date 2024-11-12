@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="medical.css"> <!-- Link to your custom CSS -->
-    <title> Medical History</title>
+    <link rel="stylesheet" href="medical.css">
+    <title>Medical History</title>
 </head>
 <body>
     <nav class="navbar">
@@ -17,9 +17,7 @@
         <div class="form-section">
             <h2>Enter Your Medical History</h2>
             <div class="calendar-section">
-                
                 <input type="date" id="historyDate" value="" required>
-                
             </div>
             <p></p>
             <form id="medicalHistoryForm">
@@ -35,27 +33,31 @@
                     <label for="medications">Current Medications</label>
                     <input type="text" id="medications">
                 </div>
-                <div class="form-group">
-                    <label for="medicalReport">Upload Medical Report (Optional)</label>
-                    <input type="file" id="medicalReport">
-                </div>
-                <div class="form-group">
-                    <label for="uploadImage">Upload Image (Optional)</label>
-                    <input type="file" id="uploadImage">
-                </div>
-                <button type="submit" class="submit-button">Submit</button>
+                <button type="submit" class="submit-button">Submit Medical History</button>
             </form>
-
-            
+            <div class="info-section">
+                <h3>Previous Records</h3>
+                <p>View or edit your previously uploaded medical history records.</p>
+                <button class="view-history-button" id="historyBtn">View History</button>
+            </div>
         </div>
 
-        <div class="info-section">
-            <h3>Previous Records</h3>
-            <p>View or edit your previously uploaded medical history records.</p>
-            <button class="view-history-button" id="historyBtn">View History</button>
+        <div class="upload-section">
+            <h3>Upload Medical Report and Image</h3>
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label for="medicalReport">Upload Medical Report</label>
+                    <input type="file" id="medicalReport" />
+                </div>
+                <div class="form-group">
+                    <label for="uploadImage">Upload Image</label>
+                    <input type="file" id="uploadImage" />
+                </div>
+                <button type="submit" class="submit-button">Upload Files to S3</button>
+            </form>
         </div>
     </div>
 
-    <script src="medical.js"></script> <!-- Link to your custom JS -->
+    <script src="medical.js"></script> 
 </body>
 </html>
