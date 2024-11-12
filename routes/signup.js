@@ -59,7 +59,7 @@ router.post('/uploadFiles', upload.fields([{ name: 'medicalReport' }, { name: 'u
                 Key: reportKey,
                 Body: medicalReport[0].buffer,
                 ContentType: medicalReport[0].mimetype,
-                ACL: 'private',  // Avoid ACL issues, set private access
+                // Removed ACL as it is not supported by your bucket's configuration
             };
 
             const s3Response = await s3.upload(params).promise();
@@ -74,7 +74,7 @@ router.post('/uploadFiles', upload.fields([{ name: 'medicalReport' }, { name: 'u
                 Key: imageKey,
                 Body: uploadImage[0].buffer,
                 ContentType: uploadImage[0].mimetype,
-                ACL: 'private',  // Avoid ACL issues, set private access
+                // Removed ACL as it is not supported by your bucket's configuration
             };
 
             const s3Response = await s3.upload(params).promise();
