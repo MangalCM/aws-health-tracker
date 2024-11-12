@@ -7,7 +7,9 @@ const authRoutes = require('./routes/auth');
 const signupRoutes = require('./routes/signup');
 const sleepRoutes = require('./routes/sleep'); 
 const waterRoutes = require('./routes/water'); 
-const medicalRoutes = require('./routes/medical'); // Import the new route
+const medicalRoutes = require('./routes/medical');
+const historyRoutes = require('./routes/history');
+ // Import the new route
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -34,7 +36,7 @@ app.use('/api/signup', signupRoutes);
 app.use('/api/sleep', sleepRoutes); 
 app.use('/api/water', waterRoutes); 
 app.use('/api/medical', medicalRoutes); // Use the medical route
-
+app.use('/api/history', historyRoutes);
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
