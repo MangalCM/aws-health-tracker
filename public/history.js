@@ -8,21 +8,19 @@ window.onload = function() {
         return;
     }
 
-    fetch(`/api/medical?username=${username}`, { method: 'GET' })
+    fetch(`/api/history?username=${username}`, { method: 'GET' })
         .then(response => {
-            // Check if the response is OK (status 200)
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             return response.json();
         })
         .then(data => {
-            // Check if data contains records
             if (Array.isArray(data) && data.length > 0) {
-                displayPreviousRecords(data); // Pass the records directly
+                displayPreviousRecords(data);
             } else {
                 alert("No previous records found.");
-                displayPreviousRecords([]); // Display empty state
+                displayPreviousRecords([]);
             }
         })
         .catch(error => {
