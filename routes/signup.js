@@ -1,17 +1,20 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
 const multer = require('multer');
-const AWS = require('aws-sdk');
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3'); // AWS SDK v3
 const path = require('path');
+
 const router = express.Router();
 const uri = 'mongodb+srv://cmmangal523:SxQOHOrlVv5JAHYn@hts.q3tn9.mongodb.net/?retryWrites=true&w=majority&appName=HTS'; // MongoDB connection string
 const client = new MongoClient(uri);
 
 // AWS S3 Configuration
-const s3 = new AWS.S3({
-    accessKeyId: 'AKIA4SZHNXMZCC6BQLWR',
-    secretAccessKey: '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',
+const s3 = new S3Client({
     region: 'ap-south-1',
+    credentials: {
+        accessKeyId: 'AKIA4SZHNXMZCC6BQLWR',
+        secretAccessKey: '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',
+    },
 });
 
 // Set up Multer storage configuration for file uploads
@@ -62,8 +65,9 @@ router.post('/uploadFiles', upload.fields([{ name: 'medicalReport' }, { name: 'u
                 // Removed ACL as it is not supported by your bucket's configuration
             };
 
-            const s3Response = await s3.upload(params).promise();
-            fileUrls.push({ medicalReport: s3Response.Location });
+            const command = new PutObjectCommand(params); // Create a command to put the object
+            const s3Response = await s3.send(command); // Send the command
+            fileUrls.push({ medicalReport: `https://my-aws-health-tracker.s3.amazonaws.com/${reportKey}` });
         }
 
         // Upload the image file if it exists
@@ -77,8 +81,9 @@ router.post('/uploadFiles', upload.fields([{ name: 'medicalReport' }, { name: 'u
                 // Removed ACL as it is not supported by your bucket's configuration
             };
 
-            const s3Response = await s3.upload(params).promise();
-            fileUrls.push({ uploadImage: s3Response.Location });
+            const command = new PutObjectCommand(params); // Create a command to put the object
+            const s3Response = await s3.send(command); // Send the command
+            fileUrls.push({ uploadImage: `https://my-aws-health-tracker.s3.amazonaws.com/${imageKey}` });
         }
 
         res.status(200).json({ message: 'Files uploaded successfully', fileUrls });
