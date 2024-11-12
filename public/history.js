@@ -2,17 +2,32 @@
 window.onload = function() {
     const username = localStorage.getItem('username');
 
+    // Check if username is available
+    if (!username) {
+        alert("User must be logged in to view medical history.");
+        return;
+    }
+
     fetch(`/api/medical?username=${username}`, { method: 'GET' })
-        .then(response => response.json())
+        .then(response => {
+            // Check if the response is OK (status 200)
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
-            if (data.success) {
-                displayPreviousRecords(data.records);
+            // Check if data contains records
+            if (Array.isArray(data) && data.length > 0) {
+                displayPreviousRecords(data); // Pass the records directly
             } else {
-                alert(data.message);
+                alert("No previous records found.");
+                displayPreviousRecords([]); // Display empty state
             }
         })
         .catch(error => {
             console.error('Error fetching previous records:', error);
+            alert('Failed to fetch previous records.');
         });
 };
 
@@ -29,7 +44,7 @@ function displayPreviousRecords(records) {
     records.forEach(record => {
         previousRecordsDiv.innerHTML += `
             <div class="record">
-                <p><strong>Date:</strong> ${record.date}</p>
+                <p><strong>Date:</strong> ${new Date(record.date).toLocaleDateString()}</p>
                 <p><strong>Condition:</strong> ${record.condition}</p>
                 <p><strong>Reason:</strong> ${record.reason}</p>
                 <p><strong>Medications:</strong> ${record.medications || 'None'}</p>
