@@ -11,7 +11,7 @@ const client = new MongoClient(uri);
 const s3 = new AWS.S3({
     accessKeyId: 'AKIA4SZHNXMZCC6BQLWR',
     secretAccessKey: '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',
-    region: 'ap-south-1b',
+    region: 'ap-south-1',
 });
 
 // Set up Multer storage configuration for file uploads
