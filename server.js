@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 
 // Enable CORS for all routes
 app.use(cors({
-    origin: 'http://localhost:3000', // Replace with your frontend's origin for production
+    origin: 'http://52.66.236.209:3000', // Replace with your frontend's origin for production
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add other methods as needed
     credentials: true // If you need to support cookies
 }));
@@ -36,6 +36,6 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: 'Internal Server Error' });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => { // Bind to all IP addresses
+    console.log(`Server is running on http://0.0.0.0:${PORT}`);
 });
